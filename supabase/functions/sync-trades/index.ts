@@ -85,7 +85,6 @@ Deno.serve(async (req) => {
         open_time:    t.open_time,
         close_time:   t.close_time,
         date:         (t.close_time || t.open_time || new Date().toISOString()).slice(0, 10),
-        account:      t.account || null,
       };
     });
 
