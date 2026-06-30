@@ -9,8 +9,8 @@
 
 'use strict';
 
-const SUPABASE_URL      = 'https://pwfaqfghkrsnitisljlb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3ZmFxZmdoa3Jzbml0aXNsamxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMjQzODcsImV4cCI6MjA4OTkwMDM4N30.16Cv4pq4e9OhY0rfbcVnnAJViTRf1xlbPVL70gM_JWA';
+const SUPABASE_URL      = 'https://jlcgfogamjjgsieatuxi.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsY2dmb2dhbWpqZ3NpZWF0dXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3OTAxNTksImV4cCI6MjA5ODM2NjE1OX0.ce3FUHEm6Uor98iLCM6Y7wt-NCNsWERUOmOZQkgPflo';
 
 // ── HELPERS ───────────────────────────────────────────────────
 function isConfigured() {
