@@ -7,7 +7,7 @@
 #property version   "1.00"
 
 input string SyncKey      = "";  // Paste your nXuu Sync Key here (Settings > MT4/5 Sync)
-input string EndpointURL  = "https://YOUR_PROJECT.supabase.co/functions/v1/sync-trades";
+input string EndpointURL  = "https://jlcgfogamjjgsieatuxi.supabase.co/functions/v1/sync-trades";
 input string AccountLabel = "";  // Optional: label this account (e.g. "FTMO", "Personal")
 
 //+------------------------------------------------------------------+
