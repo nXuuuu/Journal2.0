@@ -550,7 +550,7 @@ function renderEquity() {
   const col=total>=0?(isDark?'#4ade80':'#6b7a52'):(isDark?'#f87171':'#8a4a4a');
   const fillCol=total>=0?(isDark?'rgba(74,222,128,0.08)':'rgba(107,122,82,0.08)'):(isDark?'rgba(248,113,113,0.08)':'rgba(138,74,74,0.08)');
   const tickColor=isDark?'#444444':'#8a8478', gridColor=isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.04)';
-  equityChart=new Chart(canvas,{ type:'line', data:{ labels, datasets:[{ data, borderColor:col, borderWidth:2, pointRadius:3, pointBackgroundColor:col, fill:true, backgroundColor:fillCol, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>fmt(ctx.raw)}} }, scales:{ x:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},maxTicksLimit:8,maxRotation:0},grid:{color:gridColor}}, y:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},callback:v=>v>=0?`+$${v}`:`-$${Math.abs(v)}`},grid:{color:gridColor}} } } });
+  equityChart=new Chart(canvas,{ type:'line', data:{ labels, datasets:[{ data, borderColor:col, borderWidth:2, pointRadius:0, pointBackgroundColor:col, fill:true, backgroundColor:fillCol, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>fmt(ctx.raw)}} }, scales:{ x:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},maxTicksLimit:8,maxRotation:0},grid:{color:gridColor}}, y:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},callback:v=>v>=0?`+$${v}`:`-$${Math.abs(v)}`},grid:{color:gridColor}} } } });
 }
 
 // ── STATS / DASHBOARD ─────────────────────────────────────────
