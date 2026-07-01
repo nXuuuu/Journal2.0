@@ -80,47 +80,41 @@
 
 /* ── DARK MODE ── */
 [data-theme="dark"] {
-  /* Near-black neutrals — subtle warm undertone, not pure grey */
-  --sand:     #0a0908;
-  --sand2:    #100f0d;
-  --sand3:    #181613;
+  /* Near-black neutrals */
+  --sand:     #0b0b0b;
+  --sand2:    #111111;
+  --sand3:    #181818;
 
-  /* Text: white to warm greys */
-  --ink:      #f5f3ef;
-  --ink2:     #d8d4cc;
-  --ink3:     #8a8580;
-  --ink4:     #56524c;
-  --ink5:     #322f2b;
+  /* Text: white to cool greys */
+  --ink:      #ffffff;
+  --ink2:     #e0e0e0;
+  --ink3:     #888888;
+  --ink4:     #555555;
+  --ink5:     #333333;
 
-  /* Primary accent: green (win color doubles as brand accent) */
+  /* Single accent: green */
   --olive:     #4ade80;
   --olive-bar: #4ade80;
   --olive-bg:  rgba(74,222,128,0.10);
   --olive-dim: #22c55e;
 
-  /* Restored distinct accents — each tag/model/session reads differently */
-  --blue:      #6ca8e0;
-  --blue-bg:   rgba(108,168,224,0.12);
-  --amber:     #d8ad4d;
-  --amber-bg:  rgba(216,173,77,0.12);
-  --purple:    #b193e8;
-  --purple-bg: rgba(177,147,232,0.12);
+  /* Other accents unified to green/red */
+  --blue:      #4ade80;
+  --blue-bg:   rgba(74,222,128,0.08);
+  --amber:     #4ade80;
+  --amber-bg:  rgba(74,222,128,0.08);
+  --purple:    #4ade80;
+  --purple-bg: rgba(74,222,128,0.08);
   --rose:      #f87171;
-  --rose-bg:   rgba(248,113,113,0.12);
-  --teal:      #52d6c8;
-  --teal-bg:   rgba(82,214,200,0.12);
-  --slate:     #8fa3bd;
-  --slate-bg:  rgba(143,163,189,0.12);
-  --brown:     #c89968;
-  --brown-bg:  rgba(200,153,104,0.12);
+  --rose-bg:   rgba(248,113,113,0.10);
 
-  /* Card surfaces: subtle gradient elevation, not flat fill */
-  --surface:   #161412;
-  --surface2:  #1c1a17;
+  /* Card surfaces: neutral dark */
+  --surface:   #161616;
+  --surface2:  #1c1c1c;
 
-  /* Borders: warm, very subtle */
-  --border:    rgba(255,250,240,0.07);
-  --border2:   rgba(255,250,240,0.035);
+  /* Borders: very subtle */
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.03);
 
   /* Shadows */
   --shadow-sm: 0 1px 4px rgba(0,0,0,0.5);
@@ -129,7 +123,7 @@
 
   --green: #4ade80;
   --red:   #f87171;
-  --gold:  #d8ad4d;
+  --gold:  #4ade80;
 }
 
 /* ── BASE ── */
@@ -1492,170 +1486,132 @@ html, body {
   font-family: var(--font-serif);
 }
 
-/* ── Header & nav ── */
-[data-theme="dark"] .app-header {
-  background: #0e0d0b;
-  border-bottom-color: rgba(255,248,230,0.06);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.5);
-}
-
+/* ── Dark mode: header & surfaces ── */
+[data-theme="dark"] .app-header,
 [data-theme="dark"] .tab-bar {
-  background: #0e0d0b;
-  border-bottom-color: rgba(255,248,230,0.06);
+  background: #111111;
+  border-bottom-color: rgba(255,255,255,0.05);
 }
 
-/* ── Active tab: signature gradient underline ── */
-[data-theme="dark"] .tab-btn {
-  color: rgba(245,243,239,0.35);
-  position: relative;
+[data-theme="dark"] .card {
+  background: #161616;
+  border-color: rgba(255,255,255,0.05);
 }
-[data-theme="dark"] .tab-btn:hover {
-  color: rgba(245,243,239,0.65);
-  background: rgba(255,248,230,0.03);
-}
+
+/* ── Dark mode: active tab indicator green ── */
 [data-theme="dark"] .tab-btn.active {
   color: #4ade80;
-  border-bottom: 2px solid transparent;
-  background: linear-gradient(#0e0d0b, #0e0d0b) padding-box,
-              linear-gradient(90deg, #22c55e, #4ade80) border-box;
-  border-bottom-style: solid;
-}
-[data-theme="dark"] .tab-btn.active svg { opacity: 1; }
-
-/* ── Cards: gradient surface with real elevation ── */
-[data-theme="dark"] .card {
-  background: linear-gradient(160deg, #1a1815 0%, #141210 100%);
-  border-color: rgba(255,248,230,0.07);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,248,230,0.04);
-}
-[data-theme="dark"] .card-hd {
-  background: rgba(255,248,230,0.025);
-  border-bottom-color: rgba(255,248,230,0.05);
-}
-[data-theme="dark"] .card-title { color: #d8d4cc; }
-
-/* ── Form inputs ── */
-[data-theme="dark"] .form-input {
-  background: #111009;
-  border-color: rgba(255,248,230,0.09);
-  color: #f5f3ef;
-}
-[data-theme="dark"] .form-input:focus {
-  border-color: rgba(74,222,128,0.45);
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.07);
+  border-bottom-color: #4ade80;
 }
 
-/* ── Primary buttons ── */
+/* ── Dark mode: submit / add buttons → green ── */
 [data-theme="dark"] .submit-btn,
 [data-theme="dark"] .auth-btn {
-  background: linear-gradient(135deg, #22c55e, #4ade80);
-  color: #080807;
-  box-shadow: 0 2px 14px rgba(74,222,128,0.28);
+  background: #4ade80;
+  color: #0b0b0b;
+  box-shadow: 0 2px 12px rgba(74,222,128,0.25);
 }
 [data-theme="dark"] .submit-btn:hover,
 [data-theme="dark"] .auth-btn:hover {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  box-shadow: 0 4px 20px rgba(74,222,128,0.38);
+  background: #22c55e;
+  box-shadow: 0 4px 18px rgba(74,222,128,0.35);
 }
 
-/* ── Add buttons ── */
-[data-theme="dark"] .add-btn {
-  color: #4ade80;
-  background: rgba(74,222,128,0.07);
-  border-color: rgba(74,222,128,0.25);
-}
-[data-theme="dark"] .add-btn:hover {
-  background: #4ade80;
-  color: #080807;
-}
-
-/* ── Result buttons ── */
-[data-theme="dark"] .result-btn.win.selected  { background: #4ade80; color: #080807; border-color: #4ade80; box-shadow: 0 0 12px rgba(74,222,128,0.3); }
-[data-theme="dark"] .result-btn.loss.selected { background: #f87171; color: #080807; border-color: #f87171; box-shadow: 0 0 12px rgba(248,113,113,0.3); }
-
-/* ── Checklist ── */
+/* ── Dark mode: checklist step checked state ── */
 [data-theme="dark"] .step.checked {
-  background: rgba(74,222,128,0.05);
-  border-color: rgba(74,222,128,0.18);
+  background: rgba(74,222,128,0.06);
+  border-color: rgba(74,222,128,0.2);
 }
-[data-theme="dark"] .step.checked .step-cb    { background: #4ade80; }
-[data-theme="dark"] .step.checked .step-title { color: #4ade80; }
+[data-theme="dark"] .step.checked .step-cb {
+  background: #4ade80;
+}
+[data-theme="dark"] .step.checked .step-title {
+  color: #4ade80;
+}
 
-/* ── Progress bar ── */
+/* ── Dark mode: progress fill ── */
 [data-theme="dark"] .prog-fill {
-  background: linear-gradient(90deg, #16a34a, #4ade80);
-  box-shadow: 0 0 8px rgba(74,222,128,0.3);
+  background: linear-gradient(90deg, #22c55e, #4ade80);
 }
 
-/* ── Toggle switch ── */
+/* ── Dark mode: toggle switch ── */
 [data-theme="dark"] .toggle-switch input:checked + .toggle-slider {
   background: #4ade80;
   border-color: #4ade80;
 }
 
-/* ── Win/Loss colors ── */
-[data-theme="dark"] .win-col  { color: #4ade80 !important; }
-[data-theme="dark"] .loss-col { color: #f87171 !important; }
+/* ── Dark mode: add/text buttons ── */
+[data-theme="dark"] .add-btn {
+  color: #4ade80;
+  background: rgba(74,222,128,0.08);
+  border-color: rgba(74,222,128,0.3);
+}
+[data-theme="dark"] .add-btn:hover {
+  background: #4ade80;
+  color: #0b0b0b;
+}
 
-/* ── Trade tags: each category has its own hue ── */
-[data-theme="dark"] .trade-tag           { color: #8a8580; background: rgba(255,248,230,0.05); border: 1px solid rgba(255,248,230,0.06); }
-[data-theme="dark"] .trade-tag.account-tag { color: #6ca8e0; background: rgba(108,168,224,0.10); border-color: rgba(108,168,224,0.2); }
-[data-theme="dark"] .trade-tag.source-tag  { color: #8a8580; background: rgba(255,248,230,0.05); border-color: rgba(255,248,230,0.08); }
-[data-theme="dark"] .trade-tag.review-tag  { color: #d8ad4d; background: rgba(216,173,77,0.10);  border-color: rgba(216,173,77,0.2); }
+/* ── Dark mode: result buttons ── */
+[data-theme="dark"] .result-btn.win.selected  { background: #4ade80; color: #0b0b0b; border-color: #4ade80; }
+[data-theme="dark"] .result-btn.loss.selected { background: #f87171; color: #0b0b0b; border-color: #f87171; }
 
-/* Model tags — amber; session tags — teal; other — slate */
-[data-theme="dark"] .detail-badge.tag { color: #b193e8; background: rgba(177,147,232,0.10); border: 1px solid rgba(177,147,232,0.18); }
-[data-theme="dark"] .detail-badge.account { color: #6ca8e0; background: rgba(108,168,224,0.10); border: 1px solid rgba(108,168,224,0.18); }
+/* ── Dark mode: leaderboard bar ── */
+[data-theme="dark"] .lb-bar { background: #4ade80; }
+[data-theme="dark"] .lb-wr  { color: #4ade80; }
+[data-theme="dark"] .lb-you-badge { color: #4ade80; background: rgba(74,222,128,0.10); }
 
-/* ── Calendar ── */
-[data-theme="dark"] .cal-cell.win   { background: rgba(74,222,128,0.09);  border-color: rgba(74,222,128,0.2); }
-[data-theme="dark"] .cal-cell.loss  { background: rgba(248,113,113,0.09); border-color: rgba(248,113,113,0.2); }
-[data-theme="dark"] .cal-cell.today { outline-color: #d8ad4d; }  /* gold today ring */
+/* ── Dark mode: calendar ── */
+[data-theme="dark"] .cal-cell.win   { background: rgba(74,222,128,0.12); }
+[data-theme="dark"] .cal-cell.loss  { background: rgba(248,113,113,0.12); }
+[data-theme="dark"] .cal-cell.today { outline-color: #4ade80; }
 [data-theme="dark"] .cal-pnl-val.pos { color: #4ade80; }
 [data-theme="dark"] .legend-dot.win  { background: rgba(74,222,128,0.15); border-color: #4ade80; }
 
-/* ── Leaderboard ── */
-[data-theme="dark"] .lb-bar       { background: linear-gradient(90deg, #16a34a, #4ade80); }
-[data-theme="dark"] .lb-wr        { color: #4ade80; }
-[data-theme="dark"] .lb-you-badge { color: #4ade80; background: rgba(74,222,128,0.10); }
+/* ── Dark mode: equity chart accent ── */
+[data-theme="dark"] .win-col  { color: #4ade80 !important; }
+[data-theme="dark"] .loss-col { color: #f87171 !important; }
 
-/* ── Complete banner ── */
+/* ── Dark mode: complete banner ── */
 [data-theme="dark"] .complete-banner {
-  background: linear-gradient(135deg, #14532d, #166534);
-  box-shadow: 0 4px 20px rgba(74,222,128,0.18);
+  background: linear-gradient(135deg, #166534, #15803d);
+  box-shadow: 0 4px 16px rgba(74,222,128,0.2);
 }
 
-/* ── Dark toggle hover ── */
+/* ── Dark mode: dark toggle hover ── */
 [data-theme="dark"] .dark-toggle:hover {
-  border-color: rgba(74,222,128,0.5);
+  border-color: #4ade80;
   color: #4ade80;
-  background: rgba(74,222,128,0.07);
+  background: rgba(74,222,128,0.08);
 }
 
-/* ── Dash hero cards: each gets a distinct accent corner ── */
-[data-theme="dark"] .dash-hero-pnl { border-color: rgba(74,222,128,0.18); }
-[data-theme="dark"] .dash-hero-wr  { border-color: rgba(108,168,224,0.15); }
-[data-theme="dark"] .dash-hero-pf  { border-color: rgba(216,173,77,0.14); }
-[data-theme="dark"] .dash-hero-pnl::before { background: linear-gradient(135deg, rgba(74,222,128,0.15), transparent); }
-[data-theme="dark"] .dash-hero-wr::before  { background: linear-gradient(135deg, rgba(108,168,224,0.12), transparent); }
-[data-theme="dark"] .dash-hero-pf::before  { background: linear-gradient(135deg, rgba(216,173,77,0.12), transparent); }
-
-/* ── Metric icon accents: restored distinct hues ── */
-[data-theme="dark"] .dash-icon-green  { background: rgba(74,222,128,0.10);  color: #4ade80; }
-[data-theme="dark"] .dash-icon-red    { background: rgba(248,113,113,0.10); color: #f87171; }
-[data-theme="dark"] .dash-icon-blue   { background: rgba(108,168,224,0.10); color: #6ca8e0; }
-[data-theme="dark"] .dash-icon-purple { background: rgba(177,147,232,0.10); color: #b193e8; }
-[data-theme="dark"] .dash-icon-amber  { background: rgba(216,173,77,0.10);  color: #d8ad4d; }
-
-/* ── Detail locked box ── */
-[data-theme="dark"] .detail-locked-box {
-  background: rgba(255,248,230,0.03);
-  border-color: rgba(255,248,230,0.07);
+/* ── Dark mode: form inputs ── */
+[data-theme="dark"] .form-input {
+  background: #1c1c1c;
+  border-color: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+[data-theme="dark"] .form-input:focus {
+  border-color: rgba(74,222,128,0.5);
+  box-shadow: 0 0 0 3px rgba(74,222,128,0.08);
 }
 
-/* ── Review count badge ── */
-[data-theme="dark"] .review-count-badge { background: #d8ad4d; color: #080807; }
+/* ── Dark mode: dash hero card borders ── */
+[data-theme="dark"] .dash-hero-pnl { border-color: rgba(74,222,128,0.2); }
+[data-theme="dark"] .dash-hero-wr  { border-color: rgba(74,222,128,0.15); }
+[data-theme="dark"] .dash-hero-pf  { border-color: rgba(74,222,128,0.12); }
+[data-theme="dark"] .dash-hero-pnl::before { background: linear-gradient(135deg,#4ade80,transparent); }
+[data-theme="dark"] .dash-hero-wr::before  { background: linear-gradient(135deg,#22c55e,transparent); }
+[data-theme="dark"] .dash-hero-pf::before  { background: linear-gradient(135deg,#16a34a,transparent); }
 
-/* ── Stats chart ── */
+/* ── Dark mode: metric icon accent ── */
+[data-theme="dark"] .dash-icon-green  { background: rgba(74,222,128,0.12); color: #4ade80; }
+[data-theme="dark"] .dash-icon-red    { background: rgba(248,113,113,0.12); color: #f87171; }
+[data-theme="dark"] .dash-icon-blue   { background: rgba(74,222,128,0.10); color: #4ade80; }
+[data-theme="dark"] .dash-icon-purple { background: rgba(74,222,128,0.10); color: #4ade80; }
+[data-theme="dark"] .dash-icon-amber  { background: rgba(74,222,128,0.10); color: #4ade80; }
+
+/* ── Dark mode: stats chart wrap ── */
 [data-theme="dark"] .stats-chart-wrap canvas,
-[data-theme="dark"] .chart-wrap canvas { filter: none; }
+[data-theme="dark"] .chart-wrap canvas {
+  filter: none;
+}
