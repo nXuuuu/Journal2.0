@@ -28,7 +28,7 @@ function applyTheme(dark) {
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   const toggleBtn = document.getElementById('dark-toggle-btn');
   const settingsToggle = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) toggleBtn.textContent = dark ? '☀' : '☾';
+  if (toggleBtn) toggleBtn.dataset.icon = dark ? '☀' : '☾';
   if (settingsToggle) settingsToggle.checked = dark;
   localStorage.setItem('nxuu_theme', dark ? 'dark' : 'light');
 }

@@ -107,52 +107,53 @@
     ══════════════════════════════════════ -->
     <div class="app" id="main-app" style="display:none;">
 
-      <header class="app-header">
-        <div class="app-header-left">
+      <nav class="tab-bar" role="tablist">
+        <div class="tab-bar-logo">
           <div class="app-logo">nXuu</div>
           <div class="app-tagline">Trading Journal</div>
         </div>
-        <div class="app-header-right">
+        <button class="tab-btn active" data-tab="checklist" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Check</span>
+        </button>
+        <button class="tab-btn" data-tab="log" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/><path d="M6 6h4M6 9h4M6 12h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span>Log</span>
+        </button>
+        <button class="tab-btn" data-tab="calendar" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span>Calendar</span>
+        </button>
+        <button class="tab-btn" data-tab="equity" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3.5-4 3 2.5 3.5-5L15 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Equity</span>
+        </button>
+        <button class="tab-btn" data-tab="stats" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="6.5" y="5" width="3" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="2" width="3" height="12" rx="1" stroke="currentColor" stroke-width="1.4"/></svg>
+          <span>Stats</span>
+        </button>
+        <button class="tab-btn" data-tab="leaderboard" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5l3.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          <span>Team</span>
+        </button>
+        <button class="tab-btn" data-tab="settings" role="tab">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span>Settings</span>
+        </button>
+
+        <div class="tab-bar-foot">
           <span class="user-email" id="user-email"></span>
           <div class="account-switcher-wrap" id="account-switcher-wrap" style="display:none;">
             <select class="account-switcher" id="account-switcher" onchange="switchAccount()">
               <option value="">All Accounts</option>
             </select>
           </div>
-          <button class="dark-toggle" id="dark-toggle-btn" onclick="toggleDark()" title="Toggle dark mode" type="button">☾</button>
-          <button class="signout-btn" onclick="handleSignOut()" type="button">Sign Out</button>
+          <button class="dark-toggle" id="dark-toggle-btn" data-icon="☾" onclick="toggleDark()" title="Toggle dark mode" type="button"><span>Dark Mode</span></button>
+          <button class="signout-btn" onclick="handleSignOut()" type="button">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M11 11l3-3-3-3M14 8H6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Sign Out</span>
+          </button>
         </div>
-      </header>
-
-      <nav class="tab-bar" role="tablist">
-        <button class="tab-btn active" data-tab="checklist" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Check</span>
-        </button>
-        <button class="tab-btn" data-tab="log" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 2h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/><path d="M6 6h4M6 9h4M6 12h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <span>Log</span>
-        </button>
-        <button class="tab-btn" data-tab="calendar" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 2v2M11 2v2M2 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <span>Cal</span>
-        </button>
-        <button class="tab-btn" data-tab="equity" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 12l3.5-4 3 2.5 3.5-5L15 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Equity</span>
-        </button>
-        <button class="tab-btn" data-tab="stats" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="9" width="3" height="5" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="6.5" y="5" width="3" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="2" width="3" height="12" rx="1" stroke="currentColor" stroke-width="1.4"/></svg>
-          <span>Stats</span>
-        </button>
-        <button class="tab-btn" data-tab="leaderboard" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5l3.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-          <span>Team</span>
-        </button>
-        <button class="tab-btn" data-tab="settings" role="tab">
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <span>Settings</span>
-        </button>
       </nav>
 
       <main class="tab-content">
@@ -160,6 +161,10 @@
         <!-- ════ CHECKLIST ════ -->
         <div class="tab-pane active" id="tab-checklist">
           <div class="pane-inner">
+            <div class="page-hd">
+              <h2 class="page-title">Pre-Trade Checklist</h2>
+              <p class="page-sub">Confirm every step before you pull the trigger.</p>
+            </div>
             <div class="prog">
               <div class="prog-num" id="prog-big">0<span> / 0</span></div>
               <div class="prog-right">
@@ -300,6 +305,10 @@
         <!-- ════ EQUITY ════ -->
         <div class="tab-pane" id="tab-equity">
           <div class="pane-inner">
+            <div class="page-hd">
+              <h2 class="page-title">Equity Curve</h2>
+              <p class="page-sub">Track your account growth over time.</p>
+            </div>
             <div class="equity-stat-group">
               <div class="equity-stat"><div class="equity-stat-val" id="eq-total">—</div><div class="equity-stat-lbl">Total PnL</div></div>
               <div class="equity-stat"><div class="equity-stat-val" id="eq-best">—</div><div class="equity-stat-lbl">Best Trade</div></div>
