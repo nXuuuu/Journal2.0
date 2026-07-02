@@ -11,7 +11,6 @@ let userSteps      = [];
 let userModels     = [];
 let calYear        = new Date().getFullYear();
 let calMonth       = new Date().getMonth() + 1;
-let equityChart    = null;
 let selectedResult = null;
 let activeFilters  = { result:'', session:'', model:'', account:'', from:'', to:'' };
 let activeAccount  = ''; // '' = all accounts
@@ -145,6 +144,7 @@ async function bootApp() {
   const toggle = document.getElementById('lb-opt-in');
   if (toggle) toggle.checked = optIn;
   await Promise.all([loadTrades(), loadSteps(), loadModels()]);
+  renderStats();
 }
 
 // ── TABS ──────────────────────────────────────────────────────
@@ -157,8 +157,7 @@ function switchTab(tabName) {
     p.classList.toggle('active',p.id===`tab-${tabName}`);
   });
   if (tabName==='calendar')    renderCalendar();
-  if (tabName==='equity')      renderEquity();
-  if (tabName==='stats')       renderStats();
+  if (tabName==='overview')    renderStats();
   if (tabName==='settings')    renderSettings();
   if (tabName==='leaderboard') renderLeaderboard();
 }
@@ -280,8 +279,7 @@ function switchAccount() {
   applyFilters();
   // Re-render whichever tab is currently active
   const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab;
-  if (activeTab === 'equity')   renderEquity();
-  if (activeTab === 'stats')    renderStats();
+  if (activeTab === 'overview') renderStats();
   if (activeTab === 'calendar') renderCalendar();
 }
 
@@ -532,30 +530,25 @@ async function renderCalendar() {
 }
 
 // ── EQUITY CURVE ──────────────────────────────────────────────
-function renderEquity() {
-  const emptyEl=document.getElementById('equity-empty'), canvas=document.getElementById('equity-chart');
-  const trades = getAccountTrades();
-  if(trades.length===0){ emptyEl.style.display='flex'; canvas.style.display='none'; ['eq-total','eq-best','eq-worst','eq-dd'].forEach(id=>{document.getElementById(id).textContent=' — ';}); return; }
-  emptyEl.style.display='none'; canvas.style.display='block';
-  const sorted=[...trades].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const labels=[],data=[]; let cum=0;
-  sorted.forEach(t=>{ cum+=t.pnl_usd||0; labels.push(new Date(t.date+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})); data.push(parseFloat(cum.toFixed(2))); });
-  const pnlVals=sorted.map(t=>t.pnl_usd||0), total=cum, best=Math.max(...pnlVals), worst=Math.min(...pnlVals);
-  let peak=0,maxDD=0; data.forEach(v=>{ if(v>peak)peak=v; const dd=peak-v; if(dd>maxDD)maxDD=dd; });
-  const fmt=v=>v>=0?`+$${v.toFixed(2)}`:`-$${Math.abs(v).toFixed(2)}`;
-  document.getElementById('eq-total').textContent=fmt(total); document.getElementById('eq-total').className=`equity-stat-val ${total>=0?'win-col':'loss-col'}`;
-  document.getElementById('eq-best').textContent=fmt(best); document.getElementById('eq-worst').textContent=fmt(worst); document.getElementById('eq-dd').textContent=`-$${maxDD.toFixed(2)}`;
-  if(equityChart)equityChart.destroy();
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  const col=total>=0?(isDark?'#4ade80':'#6b7a52'):(isDark?'#f87171':'#8a4a4a');
-  const fillCol=total>=0?(isDark?'rgba(74,222,128,0.08)':'rgba(107,122,82,0.08)'):(isDark?'rgba(248,113,113,0.08)':'rgba(138,74,74,0.08)');
-  const tickColor=isDark?'#444444':'#8a8478', gridColor=isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.04)';
-  equityChart=new Chart(canvas,{ type:'line', data:{ labels, datasets:[{ data, borderColor:col, borderWidth:2, pointRadius:0, pointBackgroundColor:col, fill:true, backgroundColor:fillCol, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>fmt(ctx.raw)}} }, scales:{ x:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},maxTicksLimit:8,maxRotation:0},grid:{color:gridColor}}, y:{ticks:{color:tickColor,font:{size:10,family:'DM Mono'},callback:v=>v>=0?`+$${v}`:`-$${Math.abs(v)}`},grid:{color:gridColor}} } } });
-}
-
-// ── STATS / DASHBOARD ─────────────────────────────────────────
+// ── STATS / DASHBOARD (merged with checklist + equity into Overview tab) ──
 let statsChartMode = 'usd';
 let statsChart = null;
+let breakdownPie = null;
+const PIE_COLORS = ['#7a9260','#3a5e7a','#9a7e3e','#5a3e7a','#9a5e5e','#2a6e6e','#465666','#6a4a2a'];
+
+function renderBreakdownPie(groupKey) {
+  const canvas = document.getElementById('breakdown-pie');
+  if (!canvas) return;
+  const trades = getAccountTrades();
+  const totals = {};
+  trades.forEach(t=>{ const k=t[groupKey]?(t[groupKey].charAt(0).toUpperCase()+t[groupKey].slice(1)):'Other'; totals[k]=(totals[k]||0)+1; });
+  const labels = Object.keys(totals), data = Object.values(totals);
+  if (breakdownPie) breakdownPie.destroy();
+  if (labels.length===0) return;
+  const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+  breakdownPie = new Chart(canvas, { type:'doughnut', data:{ labels, datasets:[{ data, backgroundColor:PIE_COLORS, borderColor: isDark?'#111':'#fff', borderWidth:2 }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{ legend:{ position:'bottom', labels:{ color: isDark?'#aaa':'#5c6370', font:{size:9,family:'DM Mono'}, boxWidth:8, padding:8 } } } } });
+}
 
 function calcStreaks(trades) {
   const sorted = [...trades].sort((a,b)=>new Date(a.date)-new Date(b.date));
@@ -570,7 +563,7 @@ function calcStreaks(trades) {
 
 function renderStats() {
   const trades = getAccountTrades();
-  const emptyIds = ['st-total','st-wr','st-avgr','st-totalpnl','st-pf','st-avgwin','st-avgloss','st-rr','st-exp','st-beststreak','st-worststreak'];
+  const emptyIds = ['st-total','st-wr','st-avgr','st-totalpnl','st-pf','st-avgwin','st-avgloss','st-rr','st-exp','st-beststreak','st-worststreak','st-maxdd'];
   if(trades.length===0){
     emptyIds.forEach(id=>{ const el=document.getElementById(id); if(el)el.textContent='—'; });
     const sub1=document.getElementById('st-tradecnt'); if(sub1)sub1.textContent='— trades';
@@ -610,6 +603,11 @@ function renderStats() {
   // Streaks
   const { bestStreak, worstStreak } = calcStreaks(trades);
 
+  // Max drawdown (from cumulative PnL curve)
+  const sortedByDate = [...trades].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  let cum=0, peak=0, maxDD=0;
+  sortedByDate.forEach(t=>{ cum+=t.pnl_usd||0; if(cum>peak)peak=cum; const dd=peak-cum; if(dd>maxDD)maxDD=dd; });
+
   // Render hero
   const pnlEl = document.getElementById('st-totalpnl');
   pnlEl.textContent = totalPnl>=0?`+$${totalPnl.toFixed(2)}`:`-$${Math.abs(totalPnl).toFixed(2)}`;
@@ -639,6 +637,7 @@ function renderStats() {
   setMetric('st-worststreak', worstStreak>0?`${worstStreak}L`:'—', worstStreak>0?'loss-col':'');
   setMetric('st-avgr', `${avgR>=0?'+':''}${avgR.toFixed(2)}R`);
   document.getElementById('st-total').textContent = total;
+  setMetric('st-maxdd', maxDD>0?`-$${maxDD.toFixed(2)}`:'—');
 
   // Render daily chart
   renderStatsChart(trades);
@@ -650,6 +649,8 @@ function renderStats() {
     document.getElementById(elId).innerHTML=Object.entries(groups).map(([name,d])=>{ const t=d.wins+d.losses+d.be,w=t>0?Math.round(d.wins/t*100):0,pnlStr=d.pnl>=0?`+$${d.pnl.toFixed(2)}`:`-$${Math.abs(d.pnl).toFixed(2)}`; return `<div class="perf-row"><div class="perf-name">${name}</div><div class="perf-meta"><span class="perf-wr">${w}% WR</span><span class="perf-r ${d.pnl>=0?'win-col':'loss-col'}">${pnlStr}</span><span class="perf-count">${t} trades</span></div></div>`; }).join('');
   };
   buildPerfRows('model','model-stats'); buildPerfRows('session','session-stats'); buildPerfRows('account','account-stats');
+  const activeBk = document.querySelector('.ov-pill.active')?.dataset.bk || 'model';
+  renderBreakdownPie(activeBk);
 }
 
 function renderStatsChart(trades) {
@@ -707,6 +708,14 @@ function renderStatsChart(trades) {
       }
     }
   });
+}
+
+function switchBreakdown(kind) {
+  ['model','session','account'].forEach(k=>{
+    document.getElementById(`${k}-stats`).style.display = k===kind ? '' : 'none';
+  });
+  document.querySelectorAll('.ov-pill').forEach(b=>b.classList.toggle('active', b.dataset.bk===kind));
+  renderBreakdownPie(kind);
 }
 
 function switchStatsChart(mode) {
